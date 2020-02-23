@@ -62,6 +62,21 @@ def get_also_downloaded(content):
 
     return also_downloaded
 
+def get_reference(i, tag_id):
+    if 0 <= i < 10:
+        i = f'000{i}'
+    elif 10 <= i < 100:
+        i = f'00{i}'
+    elif 100 <= i < 1000:
+        i = f'0{i}'
+    url = f'http://citec.repec.org/cgi-bin/get_data.pl?h=RePEc:nbr:nberwo:{i}&o=all'
+    references = requests.get(url)
+    references = BeautifulSoup(references.content, features='html.parser')
+    references = references.find('div', id=tag_id)
+    references = [x.text for x in references.find_all('li', {'class': 'Cell3Font'})]
+
+    return references
+
 def get_paper(
     id,
     citation_title,
@@ -75,7 +90,9 @@ def get_paper(
     citation_pdf_url,
     topics,
     abstract,
-    also_downloaded
+    also_downloaded,
+    cited,
+    reference
 ):
     paper = {
         'id': id,
@@ -90,7 +107,9 @@ def get_paper(
         'citation_pdf_url': citation_pdf_url,
         'topics': topics,
         'abstract': abstract,
-        'also_downloaded': also_downloaded
+        'also_downloaded': also_downloaded,
+        'cited': cited,
+        'reference': reference
     }
 
     return paper
@@ -124,7 +143,9 @@ def main():
             citation_pdf_url = get_citation_item(content, 'citation_pdf_url'),
             topics = get_topics(content),
             abstract = get_abstract(content),
-            also_downloaded = get_also_downloaded(content)
+            also_downloaded = get_also_downloaded(content),
+            cited = get_reference(i, 'tabCited'),
+            reference = get_reference(i, 'tabReferences')
         )
         df = pd.DataFrame([paper])
         try:

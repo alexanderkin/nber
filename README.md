@@ -159,6 +159,8 @@ collecting ... Your PostgreSQL password:
 |topics|varchar|Paper topic(s). Can be more tan one. Hence it is stored as an array|
 |abstract|varchar|Paper abstract|
 |also_downloaded|varchar|Users who downloaded this paper also downloaded* these. Can be more than one. Hence it is stored as an array. The reason I use the URL because otherwise it won't catch other than the working papers. Users may also download something from `/chapters/`, which may be useful for analysis|
+|cited|varchar|A list of papers which cited the NBER paper. It is obtained from http://citec.repec.org/|
+|reference|varchar|A list of reference papers for each NBER paper. It is obtained from http://citec.repec.org/|
 
 # Explore
 

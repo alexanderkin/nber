@@ -11,5 +11,7 @@ CREATE TABLE paper (
     citation_pdf_url VARCHAR,
     topics VARCHAR[],
     abstract VARCHAR,
-    also_downloaded VARCHAR[]
+    also_downloaded VARCHAR[],
+    cited VARCHAR[],
+    reference VARCHAR[]
 );
