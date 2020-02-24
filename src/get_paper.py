@@ -127,8 +127,8 @@ def main():
             except Exception as error:
                 print(error)
                 attempt += 1
-                # sleep(11)
-        # sleep(11)
+                sleep(11)
+        sleep(11)
         content = BeautifulSoup(response.content, features='html.parser')
         paper = get_paper(
             id = i,
