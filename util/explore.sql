@@ -55,3 +55,17 @@ FROM (
 	FROM paper
 ) AS paper
 WHERE topics = 'Economics of Education Program';
+
+SELECT
+	author.citation_author,
+	COUNT(paper.citation_title) count_paper
+FROM author
+LEFT JOIN (
+	SELECT 
+        UNNEST(citation_author) AS citation_author,
+        citation_title
+	FROM paper
+) AS paper ON author.citation_author = paper.citation_author
+GROUP BY author.citation_author
+ORDER BY count_paper DESC 
+LIMIT 5;

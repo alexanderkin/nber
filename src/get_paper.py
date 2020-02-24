@@ -11,7 +11,7 @@ def get_latest_paper():
     content = BeautifulSoup(response.content, features='html.parser')
     latest = content.find('li', {'class': 'multiline-li'})
     latest = latest.find('a').attrs['href']
-    latest = int(latest.replace('https://data.nber.org/papers/w', ''))
+    latest = int(latest.replace('/papers/w', ''))
 
     return latest
 
@@ -127,8 +127,8 @@ def main():
             except Exception as error:
                 print(error)
                 attempt += 1
-                sleep(11)
-        sleep(11)
+                # sleep(11)
+        # sleep(11)
         content = BeautifulSoup(response.content, features='html.parser')
         paper = get_paper(
             id = i,
